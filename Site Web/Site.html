@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSL Consulting</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        body, html {
+            height: 100%;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* Héro Banner avec changement d'arrière-plan */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            color: #fff;
+            background-color: #222;
+            z-index: 1;
+        }
+
+        /* En-tête */
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Barre de navigation */
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        /* Sélecteur de langue */
+        .language-selector {
+            color: #fff;
+        }
+
+        .language-selector select {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        /* Animation d'arrière-plan */
+        .background-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            animation: slide 20s infinite;
+        }
+
+        .background-slideshow img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: fade 20s infinite;
+        }
+
+        .background-slideshow img:nth-child(1) { animation-delay: 0s; }
+        .background-slideshow img:nth-child(2) { animation-delay: 5s; }
+        .background-slideshow img:nth-child(3) { animation-delay: 10s; }
+        .background-slideshow img:nth-child(4) { animation-delay: 15s; }
+
+        @keyframes fade {
+            0%, 25% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Contenu du Héro Banner */
+        .hero-content {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border-radius: 10px;
+            z-index: 1;
+        }
+        .hero-content h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .hero-content p {
+            font-size: 1.3em;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        /* Nouvelle Section : Nouvelles, Offres, Formations, Événements */
+        .news-section {
+            padding: 50px 30px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .news-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .news-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .news-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .news-card h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .news-card p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .news-card a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .news-card a:hover {
+            color: #e0a800;
+        }
+
+        /* Section de Contact */
+        #contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 30px;
+            padding: 50px 30px;
+            background-color: #444;
+            color: #fff;
+            text-align: left;
+            position: relative;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        input[type="submit"] {
+            background-color: #ffd700;
+            color: #333;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e0a800;
+        }
+
+        /* Carte Google Maps */
+        #map {
+            
+            height: 400px;
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        /* Défilement animé vers la section */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Section Offres d'Emploi */
+        #emplois {
+            background-color: #f4f4f4;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        #emplois h2 {
+            font-size: 2.5em;
+            margin-bottom: 50px;
+        }
+
+        .emploi-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .emploi-card h3 {
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .emploi-card p {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .emploi-card .apply-btn {
+            background-color: #009dff;
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .emploi-card .apply-btn:hover {
+            background-color: #e0a800;
+        }
+
+        /* Section Événements */
+        #evenements {
+            background-color: #333;
+            color: #fff;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        #evenements h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .evenement-card {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .evenement-card h3 {
+            font-size: 1.8em;
+            color: #ffd700;
+        }
+
+        .evenement-card p {
+            font-size: 1.2em;
+        }
+
+        .evenement-card .details-btn {
+            background-color: #ffd700;
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .evenement-card .details-btn:hover {
+            background-color: #e0a800;
+        }
+        .chatbot-toggle-btn {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: #78b3ca;
+          color: white;
+          border: none;
+          padding: 14px;
+          border-radius: 50%;
+          font-size: 24px;
+          cursor: pointer;
+          z-index: 1000;
+        }
+
+/* Chatbot container */
+        .chatbot-container {
+          display: none;  /* Initially hidden */
+          position: fixed;
+          bottom: 80px;
+          right: 20px;
+          background-color: #78b3ca;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          width: 300px;
+          padding: 10px;
+          z-index: 999;
+        }
+
+/* Chatbot messages */
+        .chatbot-messages {
+         max-height: 200px;
+         overflow-y: auto;
+          margin-bottom: 10px;
+        }
+
+/* Chatbot message styling */
+        .chatbot-message {
+          margin: 5px 0;
+          padding: 8px;
+          border-radius: 5px;
+        }
+
+        .chatbot-message.user-message {
+           background-color: #e0f7fa;
+           text-align: right;
+        }
+
+        .chatbot-message.bot-message {
+          background-color: #f1f1f1;
+        }
+
+/* Chatbot input container */
+        .chatbot-input-container {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+        }
+
+/* Input and send button */
+        .chatbot-input {
+         width: 70%;
+         padding: 5px;
+        }
+
+        .chatbot-send-btn {
+            background-color: #c8c052; /* Couleur de fond */
+            color: white; /* Couleur du texte */
+            border: none;
+            padding: 6px 10px; /* Espacement interne */
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+        .chatbot-send-btn:hover {
+        background-color: #45a049; /* Couleur de fond lors du survol */
+        }
+
+        .chatbot-send-btn:active {
+          background-color: #388e3c; /* Couleur de fond lorsque le bouton est cliqué */
+        }
+        .intro-zone {
+           position: absolute;
+           top: 40%;
+           left: 50%;
+           transform: translateX(-50%);
+           background-color: rgba(0, 0, 0, 0.7);
+           color: #fff;
+           padding:  40px 60px;
+           border-radius: 15px;
+           display: none;
+           z-index: 3;
+           text-align: center;
+           opacity: 0;
+           animation: fadeIn 1s ease-out forwards; /* Add fade-in animation */
+           transition: opacity 1s ease-out;
+           width: 60%; /* Width to make it bigger */
+           max-width: 800px;
+        }
+
+        .intro-zone .logo-img {
+            width: 160px;
+            margin-bottom: 50px10px;
+        }
+
+        .intro-zone .company-description {
+         font-size: 0.95em;
+         font-weight: lighter;
+        }
+        @keyframes fadeIn {
+         0% {
+         opacity: 0;
+          }
+         100% {
+         opacity: 1;
+         }
+        }
+
+        .intro-zone.show {
+           display: block;
+            opacity: 1;
+        }
+        .logo-container {
+          display: flex;
+         align-items: center;
+        }
+
+        .logo {
+           width: 50px; /* Small logo size */
+           height: auto;
+        }
+
+         /* Search bar style */
+        .search-container {
+          display: flex;
+          align-items: center;
+        }
+
+        .search-bar {
+          padding: 10px;
+         border-radius: 5px;
+         border: 1px solid #ccc;
+         width: 200px; /* Adjust width for the search bar */
+         font-size: 1em;
+         margin-left: 10px; /* Space between the logo and the search bar */
+        }
+
+        .header:hover {
+           background-color: #444;
+        }
+        .mission-vision-values {
+         padding: 60px 20px;
+         text-align: center;
+         background-color: #bfc3c4;
+        }
+
+        .section-header h2 {
+          font-size: 2.5em;
+          color: #333;
+          margin-bottom: 20px;
+          font-weight: bold;
+          animation: fadeIn 1s ease-out;
+        }
+
+        /* Content box styling */
+        .mission-vision-values .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+       .mission-vision-values .box {
+          background-color: #9facaf;
+          border-radius: 10px;
+          padding: 30px;
+          width: 280px;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          animation: slideUp 0.8s ease;
+        }
+
+        .mission-vision-values .box:hover {
+         transform: translateY(-10px);
+         box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Icon styling */
+       .mission-vision-values .icon img {
+           width: 60px;
+           height: 60px;
+           margin-bottom: 15px;
+           animation: fadeIn 1.2s ease-out;
+        }
+
+         /* Heading and paragraph styles */
+        .mission-vision-values h3 {
+           font-size: 1.6em;
+           color: #333;
+           margin-bottom: 10px;
+        }
+
+        .mission-vision-values p {
+         color: #666;
+         font-size: 1em;
+         line-height: 1.5;
+         } 
+
+        @keyframes slideUp {
+          0% {
+           opacity: 0;
+           transform: translateY(30px);
+         }
+         100% {
+          opacity: 1;
+          transform: translateY(0);
+         }
+        } 
+        .rdv-section {
+          margin-top: 15px;
+          padding: 10px 0;
+          border-top: 1px solid #ddd;
+        }
+
+        .rdv-section label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 5px;
+          color: #3ca769;
+        }
+
+        .day-options-horizontal {
+          display: flex;
+          flex-wrap: nowrap;
+          gap: 15px;
+          align-items: center;
+          margin-top: 5px;
+
+        }
+
+        .day-options-horizontal label {
+           margin-right: 5px;
+           cursor: pointer;
+           color: #dede75;
+        }
+
+        .day-options-horizontal input[type="radio"] {
+          margin-right: 5px;
+          cursor: pointer;
+          transform: translateY(1px);
+        }
+        .social-media-icons {
+         display: flex;
+         justify-content: flex-start;
+         gap: 15px;
+         margin-top: 10px;
+        }
+
+        .social-media-icons a {
+          color: #30e5c7;
+          font-size: 24px;
+          transition: color 0.3s;
+        }
+
+        .social-media-icons a:hover {
+           color: #0077b5; /* LinkedIn blue as a default hover color */
+        }
+        .menu {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+           gap: 20px;
+        }
+
+        .menu li {
+           position: relative;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .menu .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f3e094;
+          box-shadow: 0px 8px 16px rgba(142, 134, 134, 0.2);
+          z-index: 1;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          min-width: 200px;
+        }
+
+        .menu .dropdown-content li {
+            padding: 15px;
+            border-bottom: 1px solid rgba(13, 13, 13, 0.87); /* Adds a translucent separator line */
+            background-color: #bddeb9; /* Light background color for items */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition effects */
+        }
+
+        .menu .dropdown-content li:last-child {
+           border-bottom: none; /* Removes the line for the last item */
+        }
+       
+
+        .menu .dropdown-content li a {
+            color: #444; /* Dark gray text */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px; /* Larger font for readability */
+            display: block;
+            padding: 5px;
+            text-align: left;
+        }
+
+        .menu .dropdown-content li:hover {
+         background-color: #007bff; /* Blue hover background */
+         transform: translateX(5px); /* Slightly moves the item to the right */
+         color: white; /* Text changes to white on hover */
+        }
+
+        .menu .dropdown-content li:hover a {
+         color: rgb(12, 11, 11); /* Ensures text is visible on hover */
+        }
+
+        .menu .dropdown:hover .dropdown-content {
+          display: block;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #1d3557;
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">   
+    <header>
+        <div class="logo">DSL Consulting</div>
+        <nav>
+            <a href="#evenements">A propos</a>
+            <a href="#evenements">Equipe</a>
+            <div class="menu">
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Services</a>
+                    <ul class="dropdown-content">
+                        <li><a href="changement.html">Conduite du changement</a></li>
+                        <li><a href="couts.html">Maitrise des coûts et des performances cachés</a></li>
+                        <li><a href="marketing.html">Marketing RH</a></li>
+                    </ul>
+                </li> 
+                
+            </div>
+            <a href="#evenements">Blog</a>
+            <a href="#evenements">évènements</a>
+            <a href="#contact">Avis clients</a>
+            <a href="#contact">Contact</a>
+
+        </nav>
+       
+        <div class="logo-container">
+            <img src="c6.png" alt="Company Logo" class="logo">
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search..." class="search-bar">
+        </div>
+       
+        <div class="language-selector">
+            <label for="language">Langue:</label>
+            <select id="language" name="language" onchange="changeLanguage()">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Héro Banner -->
+    <section class="hero-banner">
+        <div class="background-slideshow">
+            <img src="C1.jpg" alt="Image 1">
+            <img src="C2.jpg" alt="Image 2">
+            <img src="C3.jpg" alt="Image 3">
+            <img src="C4.jpg" alt="Image 4">
+        </div>
+        <div id="intro-zone" class="intro-zone">
+            <img src="c6.png" alt="Logo" class="logo-img">
+            <p class="company-description">Qui sommes-nous ? DSL Consulting est un cabinet de conseil en management spécialisé dans l'accompagnement des entreprises dans leurs transformations stratégiques et opérationnelles. Fort de son expertise sectorielle et de son approche personnalisée, DSL Consulting s'engage à fournir des solutions innovantes et adaptées aux besoins spécifiques de chaque client. Nous agissons avec détermination pour surmonter les défis, créons du succès en générant de la valeur durable et cultivons la loyauté à travers des relations de confiance et un engagement total envers les objectifs de nos clients.</p>
+        </div>
+
+        <!-- Contenu principal du Héro Banner -->
+        <div class="hero-content">
+            <h1>Bienvenue chez DSL Consulting</h1>
+            <p>Donner au succès sans limites</p>
+        </div>
+    </section>
+    <section class="mission-vision-values">
+        <div class="section-header">
+            <h2>Notre Principes</h2>
+        </div>
+        <div class="content">
+            <div class="box mission">
+                <div class="icon"><img src="c99.png" alt="Mission Icon"></div>
+                <h3>Mission</h3>
+                <p>Notre mission est de propulser
+                    les organisations vers des
+                    performances durables et
+                    d'excellence en management. En
+                    tant que partenaire stratégique,
+                    nous accompagnons nos clients
+                    dans leur transformation
+                    organisationnelle et les aidons à
+                    relever les défis complexes du
+                    monde d'aujourd'hui. En alliant
+                    innovation, agilité et expertise,
+                    nous leur apportons des
+                    solutions sur-mesure qui
+                    renforcent leur compétitivité et
+                    soutiennent leur croissance
+                    continue.</p>
+            </div>
+            <div class="box vision">
+                <div class="icon"><img src="C9.png" alt="Vision Icon"></div>
+                <h3>Vision</h3>
+                <p>Notre vision est de devenir
+                    le catalyseur de succès pour
+                    les entreprises ambitieuses
+                    et tournées vers l'avenir.
+                    Nous nous engageons à
+                    établir un standard de
+                    référence dans le conseil en
+                    management, en inspirant la
+                    confiance par nos résultats
+                    mesurables et notre capacité
+                    à anticiper les besoins de
+                    demain. Nous visons à être
+                    reconnus pour notre impact
+                    positif, notre expertise de
+                    pointe et notre rôle dans la
+                    transformation durable et
+                    responsable des
+                    organisations.</p>
+            </div>
+            <div class="box values">
+                <div class="icon"><img src="C8.png" alt="Values Icon"></div>
+                <h3>Values</h3>
+                <p>Nos valeurs fondamentales sont
+                    l'intégrité, l'excellence et
+                    l'innovation. Nous croyons en un
+                    conseil authentique et
+                    transparent, et nous nous
+                    engageons à fournir des
+                    solutions novatrices qui
+                    répondent aux attentes élevées
+                    de nos clients. Notre esprit de
+                    collaboration et de confiance
+                    mutuelle constitue le socle de
+                    nos partenariats, et nous mettons
+                    un point d'honneur à mobiliser
+                    l'intelligence collective de nos
+                    équipes pour dépasser les
+                    attentes et favoriser le succès de
+                    chaque projet.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nouvelle Section : Nouvelles, Offres, Formations, Événements -->
+    <section class="news-section">
+        <h2>Nos Dernières Nouvelles</h2>
+        <div class="news-cards">
+            <div class="news-card">
+                <h3>Offres d'Emploi</h3>
+                <p>Découvrez nos dernières offres d'emploi et rejoignez notre équipe.</p>
+                <a href="#">Voir les offres</a>
+            </div>
+            <div class="news-card">
+                <h3>Formations</h3>
+                <p>Suivez nos formations pour développer vos compétences techniques.</p>
+                <a href="#">Voir les formations</a>
+            </div>
+            <div class="news-card">
+                <h3>Événements</h3>
+                <p>Participez à nos événements pour élargir votre réseau et vos connaissances.</p>
+                <a href="#">Voir les événements</a>
+            </div>
+            <div class="news-card">
+                <h3>Promotions</h3>
+                <p>Profitez de nos offres spéciales et promotions exclusives.</p>
+                <a href="#">Voir les promotions</a>
+            </div>
+        </div>
+    </section>
+    <button class="chatbot-toggle-btn" id="chatbot-toggle-btn">💬</button>
+
+    <div class="chatbot-container" id="chatbot-container">
+      <h3>Chatbot</h3>
+        <div class="chatbot-messages" id="chatbot-messages">
+           <div class="chatbot-message bot-message">Bonjour! Comment puis-je vous aider?</div>
+        </div>
+        <div class="chatbot-input-container">
+           <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Votre message...">
+           <button class="chatbot-send-btn" id="chatbot-send-btn">Envoyer</button>
+        </div>
+    </div>
+
+    <!-- Section Offres d'Emploi -->
+    <section id="emplois">
+        <h2>Offres d'Emploi</h2>
+        <div class="emploi-card">
+            <h3>Technicien en Conception Technique - Menuiserie Aluminium</h3>
+            <p style="margin-bottom: 20px;">Rejoignez notre équipe pour travailler sur des projets innovantes.</p>
+            <a href="#" class="apply-btn">Postuler</a>
+        </div>
+        <div class="emploi-card">
+            <h3>Responsable Technique</h3>
+            <p style="margin-bottom: 20px;">Dirigez notre équipe technique pour assurer la qualité et l'efficacité de nos solutions.</p>
+            <a href="#" class="apply-btn">Postuler</a>
+        </div>
+    </section>
+
+   <!-- Section Contact -->
+    <section id="contact">
+        <!-- Google Map -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12465.859776035753!2d10.749932450231936!3d34.73816006861953!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1301d32e837b50a9%3A0xabb9c07666284793!2sDSL%20consulting!5e1!3m2!1sfr!2stn!4v1731626983212!5m2!1sfr!2stn" width="700" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="contact-info">
+            <h2>Contactez-nous</h2>
+            <p>Vous avez une question? Nous sommes là pour vous aider!</p>
+            <p>Adresse: Sfax route Ain km 0.5 Immeuble Henda</p>
+            <p>Téléphone: 25 307 534 / 74 000 000</p>
+            <p>Email: : dslconsulting.contact@gmail.com</p>
+           
+        
+            <div class="social-media-icons">
+               <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+               <a href="https://www.facebook.com/DSLconsulting.tn/" target="_blank"><i class="fab fa-facebook"></i></a>
+               <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <!-- Formulaire de Contact -->
+        <div class="form-container">
+            <h3>Formulaire de Contact</h3>
+            <form action="#" method="POST">
+                <label for="Nom">Nom*</label>
+                <input type="text" name="name" placeholder="Votre Nom" required>
+                <label for="message">Prénom*</label>
+                <input type="text" name="Prénom" placeholder="Votre Prénom" required
+                <label for="message">email*</label>
+
+                <input type="email" name="email" placeholder="Votre Email" required>
+                <label for="message">Sujet</label>
+                <input type="text" name="sujet de la demande" placeholder="sujet de la demande" required>
+                
+                
+            </form>
+            <div class="rdv-section">
+                <label for="best-day">Quel meilleur moment de la semaine pour prendre un RDV:</label>
+                <div class="day-options-horizontal">
+                    <input type="radio" id="monday" name="best_day" value="Monday">
+                    <label for="monday">Lundi</label>
+        
+                    <input type="radio" id="tuesday" name="best_day" value="Tuesday">
+                    <label for="tuesday">Mardi</label>
+        
+                    <input type="radio" id="wednesday" name="best_day" value="Wednesday">
+                    <label for="wednesday">Mercredi</label>
+        
+                    <input type="radio" id="thursday" name="best_day" value="Thursday">
+                    <label for="thursday">Jeudi</label>
+        
+                    <input type="radio" id="friday" name="best_day" value="Friday">
+                    <label for="friday">Vendredi</label>
+        
+                    <input type="radio" id="saturday" name="best_day" value="Saturday">
+                    <label for="saturday">Samedi</label>
+        
+                    <input type="radio" id="sunday" name="best_day" value="Sunday">
+                    <label for="sunday">Dimanche</label>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Entrez votre message ici..."></textarea>
+                <input type="submit" value="Envoyer">
+            </div>
+        </div>
+        
+
+    </section>
+
+    <!-- Intégration de Google Map -->
+    <script>
+        window.addEventListener('load', function() {
+         setTimeout(function() {
+            document.getElementById('intro-zone').classList.add('show');
+         }, 1000); // Affiche après 1 seconde
+         });
+        function initMap() {
+            
+            var mapOptions = {
+                center: {lat: 34.7467, lng: 10.7599}, // Coordonnées de Sfax, Tunisie
+                zoom: 15,
+                mapTypeId: 'roadmap'
+            };
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: {lat: 34.7467, lng: 10.7599},
+                map: map,
+                title: 'DSL CONSULTING'
+            });
+        }
+        document.getElementById('chatbot-toggle-btn').onclick = function() {
+            var chatbot = document.getElementById('chatbot-container');
+           // Toggle display style between 'none' and 'block'
+            if (chatbot.style.display === 'none' || chatbot.style.display === '') {
+               chatbot.style.display = 'block';  // Show the chatbot
+            } else {
+            chatbot.style.display = 'none';  // Hide the chatbot
+            }
+        };
+
+// Handle sending message
+        document.getElementById('chatbot-send-btn').onclick = function() {
+             var userMessage = document.getElementById('chatbot-input').value;
+               if (userMessage.trim() !== '') {
+                // Display user message
+                   var userMessageDiv = document.createElement('div');
+                   userMessageDiv.classList.add('chatbot-message', 'user-message');
+                   userMessageDiv.textContent = userMessage;
+                   document.getElementById('chatbot-messages').appendChild(userMessageDiv);
+
+                   // Clear input field
+                   document.getElementById('chatbot-input').value = '';
+
+                  // Display bot response
+                   var botResponseDiv = document.createElement('div');
+                   if (userMessage.toLowerCase().includes("des informations sur vos services")) {
+                       botResponseDiv.textContent = " Nous offrons un accompagnement personnalisé dans des domaines comme la conduite du changement, La maitrise des coûts et des performances cachés, Le marketing RH. Notre plateforme se distingue par des solutions flexibles et sur mesure pour répondre aux besoins spécifiques de chaque entreprise.Souhaitez-vous explorer l'un de ces domaines plus en détail ?.";
+                    } else {
+                       botResponseDiv.textContent = 'Merci pour votre message! Nous reviendrons vers vous rapidement.';
+                    }
+
+                   document.getElementById('chatbot-messages').appendChild(botResponseDiv);
+                    }
+        };
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <footer>
+        <p>&copy; 2024 DLS Consulting. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

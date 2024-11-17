@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le marketing RH</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #1d3557;
+            color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 5px 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #457b9d;
+            border-radius: 4px;
+        }
+
+        /* Banner Section with Background Image */
+        .banner {
+            background: url('c5.jpg') no-repeat center center/cover; 
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .banner p {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .banner .btn-container {
+            margin-top: 20px;
+        }
+
+        .banner .btn-container a {
+            background-color: #1d3557;
+            color: #fff;
+            padding: 10px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .banner .btn-container a:hover {
+            background-color: #457b9d;
+        }
+
+        .company-box-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          gap: 20px;
+        }
+
+        .company-box {
+           flex: 2;
+           padding: 20px;
+        }
+
+        .company-box h2 {
+           font-size: 2rem;
+           color: #1d3557;
+           margin-bottom: 20px;
+        }
+
+        .company-box p {
+           font-size: 1.1rem;
+           line-height: 1.6;
+           color: #555;
+        }
+
+        .company-image {
+         flex: 1;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+        }
+
+        .company-image img {
+          width: 400px;
+          height: 400px;
+          border-radius: 50%; /* Makes the image circular */
+          object-fit: cover;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .two-parts {
+            display: flex;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .two-parts div {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
+        }
+
+        .two-parts div h3 {
+            font-size: 1.6rem;
+            color: #1d3557;
+            margin-bottom: 15px;
+        }
+
+        .two-parts div p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #1d3557;
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+        .btn-container {
+          margin-top: 15px;
+         text-align: center;
+        }
+
+        .btn {
+          display: inline-block;
+          text-decoration: none;
+          background-color: #1d3557; /* Primary color */
+          color: #fff;
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 5px;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+         background-color: #457b9d; /* Hover color */
+         transform: translateY(-3px); /* Slight lift effect */
+         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="Site.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="banner">
+            <div>
+            </div>
+        </section>
+
+        <!-- Company Presentation Box -->
+        <section class="company-box-container">
+            <div class="company-box">
+                <h2>Conduite du changement</h2>
+                <p>
+                    Le cabinet DSL utilise des processus, des méthodes et des outils pour évaluer le changement, communiquer les attentes aux parties prenantes, former les employés et mesurer l'efficacité du changement.
+                </p>
+            </div>
+            <div class="company-image">
+                <img src="c777.jpg" alt="Our Company" />
+            </div>
+            
+        </section>
+        
+        <!-- Formation and Accompagnement -->
+        <section class="two-parts" id="formation-section">
+            <div>
+                <h3>Formation</h3>
+                <p>La formation est un élément clé dans la conduite du changement. Elle permet de doter les employés des compétences et des connaissances nécessaires pour s'adapter aux nouvelles méthodes, outils ou processus. Le cabinet DSL propose des programmes de formation adaptés aux spécificités de chaque projet de changement, visant à renforcer la compréhension des enjeux et à réduire les résistances</p>
+                <div class="btn-container">
+                    <a href="formation1.html" class="btn">Apply </a>
+                </div>
+            </div>
+            <div id="accompagnement-section">
+                <h3>Accompagnement</h3>
+                <p>L'accompagnement est un processus continu qui soutient les individus et les équipes tout au long de la phase de transition. Le cabinet DSL offre un accompagnement personnalisé, en rapprochant les leaders du changement des employés pour les aider à surmonter les défis et les inquiétudes liés à la transformation</p>
+                <div class="btn-container">
+                    <a href="accompagnement2.html" class="btn">Apply</a>
+                </div>  
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 DLS Consulting. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>
